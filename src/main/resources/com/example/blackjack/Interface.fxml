@@ -7,26 +7,40 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="330.0" prefWidth="367.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.blackjack.Controller">
-    <Label fx:id="guthabenLabel" layoutX="221.0" layoutY="155.0" prefHeight="17.0" prefWidth="121.0" text="Guthaben: 2000€" />
+<AnchorPane prefHeight="330.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.blackjack.Controller">
+    <Label fx:id="guthabenLabel" layoutX="221.0" layoutY="155.0" prefHeight="17.0" prefWidth="144.0" text="Guthaben: 2000€" />
     <Button fx:id="newCardButton" disable="true" layoutX="110.0" layoutY="116.0" mnemonicParsing="false" onAction="#pullNewCard" prefHeight="30.0" prefWidth="83.0" text="New Card" />
-    <Label fx:id="countedCards" layoutX="229.0" layoutY="51.0" prefHeight="17.0" prefWidth="104.0" text="Counted:" />
-    <Label fx:id="countedCardsBank" layoutX="229.0" layoutY="90.0" prefHeight="17.0" prefWidth="104.0" text="Bank:" />
+    <Label fx:id="countedCards" layoutX="229.0" layoutY="51.0" prefHeight="19.0" prefWidth="122.0" text="Counted:">
+      <font>
+         <Font name="System Bold" size="15.0" />
+      </font></Label>
+    <Label fx:id="countedCardsBank" layoutX="229.0" layoutY="90.0" prefHeight="18.0" prefWidth="122.0" text="Bank:">
+      <font>
+         <Font size="15.0" />
+      </font></Label>
     <TextField fx:id="betValue" disable="true" layoutX="216.0" layoutY="181.0" onKeyPressed="#pressEnter" prefHeight="26.0" prefWidth="96.0" />
-    <Separator layoutX="208.0" layoutY="135.0" prefHeight="17.0" prefWidth="173.0" />
+    <Separator layoutX="208.0" layoutY="135.0" prefHeight="17.0" prefWidth="235.0" />
     <Separator layoutX="200.0" layoutY="144.0" orientation="VERTICAL" prefHeight="143.0" prefWidth="16.0" />
-    <Button fx:id="betting" disable="true" layoutX="324.0" layoutY="181.0" mnemonicParsing="false" onAction="#betMoney" prefHeight="26.0" prefWidth="44.0" text="Bet" />
-    <Label fx:id="betted" layoutX="216.0" layoutY="221.0" prefHeight="17.0" prefWidth="96.0" text="Betted:" />
-    <Label fx:id="onWinLabel" layoutX="216.0" layoutY="244.0" prefHeight="17.0" prefWidth="96.0" text="On win:" />
+    <Button fx:id="betting" disable="true" layoutX="324.0" layoutY="181.0" mnemonicParsing="false" onAction="#betMoney" prefHeight="26.0" prefWidth="58.0" text="Bet" />
+    <Label fx:id="betted" layoutX="216.0" layoutY="221.0" prefHeight="17.0" prefWidth="144.0" text="Betted:">
+      <font>
+         <Font name="System Bold Italic" size="13.0" />
+      </font></Label>
+    <Label fx:id="onWinLabel" layoutX="216.0" layoutY="252.0" prefHeight="17.0" prefWidth="144.0" text="On win:">
+      <font>
+         <Font name="System Italic" size="13.0" />
+      </font></Label>
     <Button fx:id="stopping" layoutX="130.0" layoutY="154.0" mnemonicParsing="false" onAction="#stopCardPull" text="Start" />
-    <Label fx:id="winning" alignment="CENTER" contentDisplay="CENTER" layoutX="87.0" layoutY="88.0" prefHeight="94.0" prefWidth="209.0" text="Win" textAlignment="CENTER" textFill="#19d33f" visible="false">
-        <font>
-          <Font size="52.0" />
-        </font>
-    </Label>
    <Label fx:id="cardDeck" alignment="TOP_CENTER" contentDisplay="TOP" layoutX="20.0" layoutY="23.0" prefHeight="238.0" prefWidth="76.0" text="Cards">
       <font>
          <Font size="17.0" />
       </font>
    </Label>
+   <Label fx:id="cardDeckDealer" layoutX="234.0" layoutY="108.0" text="[]">
+      <font>
+         <Font size="14.0" />
+      </font></Label>
+   <Label fx:id="profit" layoutX="368.0" layoutY="154.0" prefHeight="17.0" prefWidth="69.0" text="[]" />
+   <Label fx:id="mult" layoutX="338.0" layoutY="221.0" prefHeight="17.0" prefWidth="83.0" text="Mult:" />
+   <Button fx:id="restartButton" layoutX="124.0" layoutY="70.0" mnemonicParsing="false" onAction="#restartPress" text="Restart" visible="false" />
 </AnchorPane>
