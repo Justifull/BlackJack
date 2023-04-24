@@ -14,7 +14,7 @@ public class Card {
 
     private final static String[] CARDSTAIL = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"};
 
-    public Card() {
+    public Card(int ident) {
         cardTail = CARDSTAIL[(int)(Math.random() * CARDSTAIL.length)];
         cardHead = CARDSHEAD[(int)(Math.random() * CARDSHEAD.length)];
         cardBody = cardHead + " " + cardTail;
@@ -24,9 +24,21 @@ public class Card {
                 cardTail.equals("Q") ||
                     cardTail.equals("K")) {
             cardValueT = 10;
-        } else if (cardTail.equals("A") && Controller.cardsCountedValue + 11 > 21) {
+        } else if (cardTail.equals("A") && ident == 1 && Controller.cardsCountedValue + 11 > 21) {
             cardValueT = 1;
-        } else if (cardTail.equals("A") && Controller.cardsCountedValue + 11 < 21) {
+        } else if (cardTail.equals("A") && ident == 1 && Controller.cardsCountedValue + 11 < 21) {
+            cardValueT = 11;
+        } else if (cardTail.equals("A") && ident == 2 && Controller.cardsCountedValueP2 + 11 > 21) {
+            cardValueT = 1;
+        } else if (cardTail.equals("A") && ident == 2 && Controller.cardsCountedValueP2 + 11 < 21) {
+            cardValueT = 11;
+        } else if (cardTail.equals("A") && ident == 3 && Controller.cardsCountedValueP3 + 11 > 21) {
+            cardValueT = 1;
+        } else if (cardTail.equals("A") && ident == 3 && Controller.cardsCountedValueP3 + 11 < 21) {
+            cardValueT = 11;
+        } else if (cardTail.equals("A") && ident == 4 && Controller.cardsCountedDealer + 11 > 21) {
+            cardValueT = 1;
+        } else if (cardTail.equals("A") && ident == 4 && Controller.cardsCountedDealer + 11 < 21) {
             cardValueT = 11;
         } else {
             cardValueT = Integer.parseInt(cardTail);
@@ -44,8 +56,24 @@ public class Card {
                 create(cardBody);
             }
         }
-        for (Card d : Controller.cardsDealer) {
+        for (Card d : Controller.cardsP2) {
             if (d.getName().equals(s)) {
+                cardTail = CARDSTAIL[(int)(Math.random() * CARDSTAIL.length)];
+                cardHead = CARDSHEAD[(int)(Math.random() * CARDSHEAD.length)];
+                cardBody = cardHead + " " + cardTail;
+                create(cardBody);
+            }
+        }
+        for (Card e : Controller.cardsP3) {
+            if (e.getName().equals(s)) {
+                cardTail = CARDSTAIL[(int)(Math.random() * CARDSTAIL.length)];
+                cardHead = CARDSHEAD[(int)(Math.random() * CARDSHEAD.length)];
+                cardBody = cardHead + " " + cardTail;
+                create(cardBody);
+            }
+        }
+        for (Card f : Controller.cardsDealer) {
+            if (f.getName().equals(s)) {
                 cardTail = CARDSTAIL[(int)(Math.random() * CARDSTAIL.length)];
                 cardHead = CARDSHEAD[(int)(Math.random() * CARDSHEAD.length)];
                 cardBody = cardHead + " " + cardTail;
