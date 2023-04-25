@@ -60,6 +60,8 @@ public class Controller {
 
     public static boolean cheat = false;
 
+    public static boolean cheatBalance = false;
+
     public static boolean kiWinP2 = false;
 
     public static boolean kiWinP3 = false;
@@ -454,9 +456,9 @@ public class Controller {
         kiWinP2 = false;
         lostP3 = false;
         lostP2 = false;
-        guthaben = 2000;
-        guthabenP2 = 2000;
-        guthabenP3 = 2000;
+        guthaben = 500;
+        guthabenP2 = 500;
+        guthabenP3 = 500;
         gewinn = 0;
         gewinnP2 = 0;
         gewinnP3 = 0;
@@ -711,6 +713,25 @@ public class Controller {
                 } else {
                     cheat = false;
                     betting.setText("Bet");
+                    betValue.clear();
+                    return;
+                }
+            }
+
+            if (betInput == -4242) {
+                if (!cheatBalance) {
+                    cheatBalance = true;
+                    guthaben += 10000;
+                    guthabenLabel.setText(guthaben + "€");
+                    betValue.clear();
+                    return;
+                } else if (guthaben > 10000) {
+                    cheatBalance = false;
+                    guthaben -= 10000;
+                    guthabenLabel.setText(guthaben + "€");
+                    betValue.clear();
+                    return;
+                } else {
                     betValue.clear();
                     return;
                 }
