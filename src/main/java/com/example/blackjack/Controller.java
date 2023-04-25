@@ -38,11 +38,11 @@ public class Controller {
 
     public static int cardsCountedDealer;
 
-    public static int guthaben = 2000;
+    public static int guthaben = 500;
 
-    public static int guthabenP2 = 2000;
+    public static int guthabenP2 = 500;
 
-    public static int guthabenP3 = 2000;
+    public static int guthabenP3 = 500;
 
     public static boolean played = false;
 
@@ -73,6 +73,8 @@ public class Controller {
     public static int profitValueP2;
 
     public static int profitValueP3;
+
+    public static boolean instantWin = false;
 
     @FXML
     private Label guthabenLabelP2;
@@ -194,12 +196,14 @@ public class Controller {
         cardDeckDealer.setText("Dealer\n \n" + update);
 
         gewinn = 0;
+        if(instantWin == true) ending();
         endingKiP3();
         endingKiP2();
         restart();
     }
 
     public void winKiP2() {
+        System.out.println("Win P2");
         kiWinP2 = true;
         guthabenP2 += gewinnP2;
 
@@ -219,6 +223,7 @@ public class Controller {
     }
 
     public void winKiP3() {
+        System.out.println("Win P3");
         kiWinP3 = true;
         guthabenP3 += gewinnP3;
 
@@ -238,6 +243,7 @@ public class Controller {
     }
 
     public void failKiP2() {
+        System.out.println("Fail P2");
         guthabenLabelP2.setText(guthabenP2 + "€");
 
         countedCards2.setText("[ " + cardsCountedValueP2 + " ]");
@@ -262,6 +268,7 @@ public class Controller {
     }
 
     public void failKiP3() {
+        System.out.println("Fail P3");
         guthabenLabelP3.setText(guthabenP3 + "€");
 
         countedCards3.setText("[ " + cardsCountedValueP3 + " ]");
@@ -279,7 +286,7 @@ public class Controller {
         gewinnP3 = 0;
 
         if (guthabenP3 == 0) {
-            lostP2 = true;
+            lostP3 = true;
         }
 
         stayP3 = true;
@@ -287,12 +294,21 @@ public class Controller {
 
     public void endingKiP2() {
         String updateP2 = "";
-        while (cardsCountedValueP2 < 16) {
+        while (cardsCountedValueP2 <= 16) {
             Card newP2 = new Card(2);
             cardsCountedValueP2 += newP2.getValue();
             cardsP2.add(newP2);
             for (Card c : cardsP2) {
                 updateP2 += "[" + c.getName() + "]\n";
+            }
+            for (Card c : cardsP2) {
+                if (c.getName().substring(2).equals("A") && cardsCountedValueP2 > 21) {
+                    c.changeValue(1);
+                    cardsCountedValueP2 = 0;
+                    for (Card d : cardsP2) {
+                        cardsCountedValueP2 += d.getValue();
+                    }
+                }
             }
         }
         cardDeck2.setText("Cards P2\n \n" + updateP2);
@@ -301,21 +317,30 @@ public class Controller {
             failKiP2();
             return;
         }
-        if (cardsCountedDealer >= cardsCountedValueP2) {
+        if (cardsCountedDealer >= cardsCountedValueP2 && kiWinP2 == false && cardsCountedDealer <= 21) {
             failKiP2();
-        } else {
+        } else if (kiWinP2 == false) {
             winKiP2();
         }
     }
 
     public void endingKiP3() {
         String updateP3 = "";
-        while (cardsCountedValueP3 < 16) {
+        while (cardsCountedValueP3 <= 16) {
             Card newP3 = new Card(3);
             cardsCountedValueP3 += newP3.getValue();
             cardsP3.add(newP3);
             for (Card c : cardsP3) {
                 updateP3 += "[" + c.getName() + "]\n";
+            }
+            for (Card c : cardsP3) {
+                if (c.getName().substring(2).equals("A") && cardsCountedValueP3 > 21) {
+                    c.changeValue(1);
+                    cardsCountedValueP3 = 0;
+                    for (Card d : cardsP3) {
+                        cardsCountedValueP3 += d.getValue();
+                    }
+                }
             }
         }
         cardDeck3.setText("Cards P3\n \n" + updateP3);
@@ -324,9 +349,9 @@ public class Controller {
             failKiP3();
             return;
         }
-        if (cardsCountedDealer >= cardsCountedValueP3) {
+        if (cardsCountedDealer >= cardsCountedValueP3 && kiWinP3 == false && cardsCountedDealer <= 21) {
             failKiP3();
-        } else {
+        } else if (kiWinP3 == false) {
             winKiP3();
         }
     }
@@ -353,6 +378,15 @@ public class Controller {
         for (Card c : cards) {
             update += "[" + c.getName() + "]\n";
         }
+        for (Card c : cards) {
+            if (c.getName().substring(2).equals("A") && cardsCountedValue > 21) {
+                c.changeValue(1);
+                cardsCountedValue = 0;
+                for (Card d : cards) {
+                    cardsCountedValue += d.getValue();
+                }
+            }
+        }
         cardDeck.setText("Cards YOU\n \n" + update);
         countedCards.setText("[ " + cardsCountedValue + " ]");
         if (cardsCountedValue > 21) {
@@ -370,6 +404,15 @@ public class Controller {
             for (Card c : cardsP2) {
                 updateP2 += "[" + c.getName() + "]\n";
             }
+            for (Card c : cardsP2) {
+                if (c.getName().substring(2).equals("A") && cardsCountedValueP2 > 21) {
+                    c.changeValue(1);
+                    cardsCountedValueP2 = 0;
+                    for (Card d : cardsP2) {
+                        cardsCountedValueP2 += d.getValue();
+                    }
+                }
+            }
             cardDeck2.setText("Cards P2\n \n" + updateP2);
             countedCards2.setText("[ " + cardsCountedValueP2 + " ]");
             if (cardsCountedValueP2 > 21) {
@@ -386,6 +429,15 @@ public class Controller {
             for (Card c : cardsP3) {
                 updateP3 += "[" + c.getName() + "]\n";
             }
+            for (Card c : cardsP3) {
+                if (c.getName().substring(2).equals("A") && cardsCountedValueP3 > 21) {
+                    c.changeValue(1);
+                    cardsCountedValueP3 = 0;
+                    for (Card d : cardsP3) {
+                        cardsCountedValueP3 += d.getValue();
+                    }
+                }
+            }
             cardDeck3.setText("Cards P3\n \n" + updateP3);
             countedCards3.setText("[ " + cardsCountedValueP3 + " ]");
             if (cardsCountedValueP3 > 21) {
@@ -398,6 +450,8 @@ public class Controller {
 
     @FXML
     protected void restartPress() {
+        kiWinP3 = false;
+        kiWinP2 = false;
         lostP3 = false;
         lostP2 = false;
         guthaben = 2000;
@@ -426,7 +480,6 @@ public class Controller {
         profit.setVisible(false);
         profit1.setVisible(false);
         profit2.setVisible(false);
-        played = true;
         countedCardsBank.setText("[]");
         countedCards.setText("[]");
         countedCards2.setText("[]");
@@ -438,41 +491,48 @@ public class Controller {
     public void ending() {
         String update = "";
         while (cardsCountedDealer < 17) {
-            Card newDealer = new Card(3);
+            Card newDealer = new Card(4);
             cardsCountedDealer += newDealer.getValue();
             cardsDealer.add(newDealer);
             for (Card c : cardsDealer) {
                 update += "[" + c.getName() + "]\n";
             }
+            for (Card c : cardsDealer) {
+                if (c.getName().substring(2).equals("A") && cardsCountedDealer > 21) {
+                    c.changeValue(1);
+                    cardsCountedDealer = 0;
+                    for (Card d : cardsDealer) {
+                        cardsCountedDealer += d.getValue();
+                    }
+                }
+            }
         }
         cardDeckDealer.setText("Dealer\n \n" + update);
         countedCardsBank.setText("[ " + cardsCountedDealer + " ]");
 
-        endingKiP2();
-        endingKiP3();
         if (cardsCountedDealer > 21) {
-            if (cardsCountedValue < 21) win();
-            if (cardsCountedValueP2 < 21) winKiP2();
-            if (cardsCountedValueP3 < 21) winKiP3();
+            if (cardsCountedValue <= 21 && instantWin == false) win();
+            if (cardsCountedValueP2 <= 21 && kiWinP2 == false) winKiP2();
+            if (cardsCountedValueP3 <= 21 && kiWinP2 == false) winKiP3();
             return;
         }
-        if (cardsCountedDealer >= cardsCountedValue) {
+        if ((cardsCountedDealer >= cardsCountedValue || cardsCountedValue > 21) && instantWin == false && cardsCountedDealer <= 21) {
             if (!cheat) {
                 fail();
-            } else {
+            } else if (instantWin == false) {
                 win();
             }
         } else {
             win();
         }
-        if (cardsCountedDealer >= cardsCountedValueP2) {
+        if ((cardsCountedDealer >= cardsCountedValueP2 || cardsCountedValueP2 > 21) && kiWinP2 == false && cardsCountedDealer <= 21) {
             failKiP2();
-        } else {
+        } else if (kiWinP2 == false) {
             winKiP2();
         }
-        if (cardsCountedDealer >= cardsCountedValueP3) {
+        if ((cardsCountedDealer >= cardsCountedValueP3 || cardsCountedValueP3 > 21) && kiWinP3 == false && cardsCountedDealer <= 21) {
             failKiP3();
-        } else {
+        } else if (kiWinP3 == false) {
             winKiP3();
         }
     }
@@ -553,9 +613,10 @@ public class Controller {
 
         newCardButton.setDisable(false);
 
-        betValue.setText("");
+        betValue.clear();
 
         if (cardsCountedValue == 21) {
+            instantWin = true;
             win();
         }
 
@@ -590,6 +651,9 @@ public class Controller {
             stopping.setDisable(true);
             newCardButton.setDisable(true);
             played = true;
+            instantWin = false;
+            kiWinP2 = false;
+            kiWinP3 = false;
             countedCardsBank.setText("[]");
             countedCards.setText("[]");
             countedCards2.setText("[]");
@@ -601,21 +665,27 @@ public class Controller {
             ending();
             return;
         }
-        if (cardsCountedValue <= cardsCountedDealer) {
+        if (cardsCountedDealer > 21) {
+            if (cardsCountedValue <= 21 && instantWin == false) win();
+            if (cardsCountedValueP2 <= 21 && kiWinP2 == false) winKiP2();
+            if (cardsCountedValueP3 <= 21 && kiWinP3 == false) winKiP3();
+            return;
+        }
+        if ((cardsCountedValue <= cardsCountedDealer || cardsCountedValue > 21) && instantWin == false && cardsCountedDealer <= 21) {
             if (!cheat) {
                 fail();
-            } else {
+            } else if (instantWin == false) {
                 win();
             }
         } else win();
 
-        if (cardsCountedValueP2 <= cardsCountedDealer) {
+        if ((cardsCountedValueP2 <= cardsCountedDealer || cardsCountedValueP2 > 21) && kiWinP2 == false && cardsCountedDealer <= 21) {
             failKiP2();
-        } else winKiP2();
+        } else if (kiWinP2 == false) winKiP2();
 
-        if (cardsCountedValueP3 <= cardsCountedDealer) {
+        if ((cardsCountedValueP3 <= cardsCountedDealer || cardsCountedValueP3 > 21) && kiWinP3 == false && cardsCountedDealer <= 21) {
             failKiP3();
-        } else winKiP3();
+        } else if (kiWinP3 == false) winKiP3();
     }
 
     public void pressEnter(KeyEvent e) {
@@ -684,12 +754,17 @@ public class Controller {
             guthabenLabelP3.setText(guthabenP3 + "€");
             mult.setText("[ " + multiplier + "x ]");
             start();
+            return;
         }
         catch (NumberFormatException f) {
             betValue.clear();
+            System.out.println(f);
+            return;
         }
         catch (Exception g) {
             betValue.clear();
+            System.out.println(g);
+            return;
         }
     }
 }

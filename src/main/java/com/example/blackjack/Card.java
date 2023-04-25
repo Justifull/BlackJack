@@ -4,7 +4,7 @@ public class Card {
 
     private final String card;
 
-    private final int cardValue;
+    private int cardValue;
 
     private static String cardTail;
     private static String cardHead;
@@ -89,5 +89,9 @@ public class Card {
 
     public String getName() {
         return this.card;
+    }
+
+    public void changeValue(int n) {
+        this.cardValue = n;
     }
 }
